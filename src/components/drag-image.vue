@@ -30,7 +30,7 @@ const { y } = useDraggable(el, {
 <template>
   <div
     ref="el"
-    style="position: absolute; left: 50%; user-select: none; white-space: nowrap"
+    style="position: absolute; font-size: 100px; left: 50%; user-select: none"
     :style="{ transform: `translate3d(-50%, ${y}px, 0)` }"
     contenteditable
     v-html="text"
