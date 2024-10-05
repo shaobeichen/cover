@@ -1,5 +1,44 @@
 @import './base.css';
 
+/* 荆南波波黑 */
+@font-face {
+  font-family: 'jing-nan-bo-bo-hei';
+  font-display: 'swap';
+  src: url('./fonts/jing-nan-bo-bo-hei.ttf') format('ttf');
+}
+
+/* 联盟起艺卢帅正锐黑体 */
+@font-face {
+  font-family: 'lian-meng-qi-yi';
+  font-display: 'swap';
+  src: url('./fonts/lian-meng-qi-yi.ttf') format('ttf');
+}
+
+/* 思源真黑-Bold */
+@font-face {
+  font-family: 'si-yuan-zhen-hei-Bold';
+  font-display: 'swap';
+  src: url('./fonts/si-yuan-zhen-hei-Bold.ttf') format('ttf');
+}
+
+/* 托加里特体-Bold-2 */
+@font-face {
+  font-family: 'tuo-jia-li-Bold-2';
+  font-display: 'swap';
+  src: url('./fonts/tuo-jia-li-Bold-2.otf') format('otf');
+}
+
+/* 小米MiSans-Bold */
+@font-face {
+  font-family: 'mi-sans-Bold';
+  font-display: 'swap';
+  src: url('./fonts/mi-sans-Bold.ttf') format('ttf');
+}
+
+[contenteditable] {
+  outline: none;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
