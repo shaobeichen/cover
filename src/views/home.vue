@@ -12,7 +12,20 @@
         </el-select>
       </el-form-item>
       <el-form-item label="背景">
-        <input type="file" ref="file" @change="uploadBackground" />
+        <upload @change="updateBackground" />
+      </el-form-item>
+      <el-form-item label="主icon">
+        <upload @change="updateIcon" />
+      </el-form-item>
+      <el-form-item label="选择风格">
+        <el-select v-model="styleSelect">
+          <el-option
+            v-for="item in styleList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="文字颜色">
         <el-color-picker v-model="color1" show-alpha />
@@ -25,13 +38,13 @@
     </el-form>
   </div>
 
-  <el-divider />
-
   <div style="display: flex; width: fit-content; margin: 0 auto">
     <image-container
       id="imageWrapper"
       :colors="[color1, color2, color3]"
-      :initxy-list="[7, 164, 262, 357]"
+      :initxy-list="currentInitxyList[0]"
+      :background="background"
+      :icon="icon"
       :style="{ fontFamily: fontSelect }"
       style="width: 960px; height: 540px"
     />
@@ -39,7 +52,9 @@
     <image-container
       id="imageWrapper2"
       :colors="[color1, color2, color3]"
-      :initxy-list="[78, 220, 297, 374]"
+      :initxy-list="currentInitxyList[1]"
+      :background="background"
+      :icon="icon"
       :fontSize="70"
       style="width: 456px; height: 608px"
       :style="{ fontFamily: fontSelect }"
@@ -48,9 +63,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import html2canvas from 'html2canvas'
-import backgroundImage from '@/assets/images/background.jpg'
 
 const color1 = ref('#fff')
 const color2 = ref('#f9a929')
@@ -58,8 +72,8 @@ const color3 = ref('#f55456')
 
 const dataURL = ref('')
 const dataURL2 = ref('')
-const file = ref()
-const background = ref(backgroundImage)
+const background = ref('')
+const icon = ref('')
 const fontList = ref([
   {
     label: '荆南波波黑',
@@ -83,6 +97,28 @@ const fontList = ref([
   }
 ])
 const fontSelect = ref(fontList.value[0].value)
+const styleList = ref([
+  {
+    value: 1,
+    label: '上下风格'
+  },
+  {
+    value: 2,
+    label: '左右风格'
+  }
+])
+const styleSelect = ref(styleList.value[0].value)
+const initxyListMap = {
+  1: [
+    [-20, 164, 262, 357],
+    [60, 220, 297, 374]
+  ],
+  2: [
+    [0, 0, 0, 0],
+    [60, 164, 262, 357]
+  ]
+}
+const currentInitxyList = computed(() => initxyListMap[styleSelect.value || 1])
 
 const downloadImage = (value, name) => {
   const link = document.createElement('a')
@@ -113,21 +149,11 @@ const toImage = () => {
     downloadImage(dataURL2.value, '9')
   })
 }
-const blobToDataURL = (blob, cb) => {
-  const reader = new FileReader()
-  reader.onload = function (evt) {
-    const base64 = evt.target.result
-    cb(base64)
-  }
-  reader.readAsDataURL(blob)
+
+const updateBackground = (value) => {
+  background.value = value
 }
-const uploadBackground = () => {
-  let img = file.value.files[0]
-  if (img) {
-    blobToDataURL(img, (base64Url) => {
-      background.value = base64Url
-      file.value = ''
-    })
-  }
+const updateIcon = (value) => {
+  icon.value = value
 }
 </script>

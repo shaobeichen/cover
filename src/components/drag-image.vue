@@ -1,11 +1,10 @@
 <script setup>
-import { useDraggable } from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
-  text: {
+  src: {
     type: String,
-    default: '文字Text'
+    default: ''
   },
   initxy: {
     type: Object,
@@ -13,26 +12,16 @@ const props = defineProps({
   }
 })
 
-const el = ref(null)
-let parentElement = ref(null)
-
-onMounted(() => {
-  parentElement.value = el.value.parentElement
-})
-
-const { y } = useDraggable(el, {
-  stopPropagation: true,
-  initialValue: props.initxy,
-  containerElement: parentElement
-})
+let y = ref(props.initxy?.y)
+let x = ref(props.initxy?.x || '-50%')
 </script>
 
 <template>
-  <div
+  <img
+    v-if="src"
     ref="el"
-    style="position: absolute; font-size: 100px; left: 50%; user-select: none"
-    :style="{ transform: `translate3d(-50%, ${y}px, 0)` }"
-    contenteditable
-    v-html="text"
-  ></div>
+    style="position: absolute; font-size: 100px; left: 50%; user-select: none; user-drag: none"
+    :style="{ transform: `translate3d(${x}, ${y}px, 0)` }"
+    :src="src"
+  />
 </template>

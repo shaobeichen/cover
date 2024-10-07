@@ -3,7 +3,7 @@
     <drag-text
       :text="emoji"
       :initxy="{ y: textEmojiY }"
-      :style="{ fontSize: `${fontSize + 50}px` }"
+      :style="{ fontSize: `${fontSize + 70}px` }"
     />
     <drag-text
       :text="text1"
@@ -19,6 +19,11 @@
       :text="text3"
       :initxy="{ y: text3Y }"
       :style="{ color: color3, fontSize: `${fontSize}px` }"
+    />
+    <drag-image
+      :src="icon"
+      :initxy="{ y: textEmojiY }"
+      style="width: 200px; height: 200px; object-fit: cover"
     />
     <img :src="background" style="width: 100%; height: 100%; object-fit: cover" />
   </div>
@@ -40,6 +45,14 @@ const props = defineProps({
   fontSize: {
     type: Number,
     default: 100
+  },
+  background: {
+    type: String,
+    default: ''
+  },
+  icon: {
+    type: String,
+    default: ''
   }
 })
 
@@ -55,6 +68,6 @@ const textEmojiY = computed(() => props.initxyList[0])
 const text1Y = computed(() => props.initxyList[1])
 const text2Y = computed(() => props.initxyList[2])
 const text3Y = computed(() => props.initxyList[3])
-
-const background = ref(backgroundImage)
+const background = computed(() => props.background || backgroundImage)
+const icon = computed(() => props.icon)
 </script>

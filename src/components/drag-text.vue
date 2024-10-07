@@ -1,6 +1,5 @@
 <script setup>
-import { useDraggable } from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   text: {
@@ -9,29 +8,19 @@ const props = defineProps({
   },
   initxy: {
     type: Object,
-    default: () => ({ x: 0, y: 0 })
+    default: () => ({ x: '-50%', y: 0 })
   }
 })
 
-const el = ref(null)
-let parentElement = ref(null)
-
-onMounted(() => {
-  parentElement.value = el.value.parentElement
-})
-
-const { y } = useDraggable(el, {
-  stopPropagation: true,
-  initialValue: props.initxy,
-  containerElement: parentElement
-})
+let y = ref(props.initxy?.y)
+let x = ref(props.initxy?.x || '-50%')
 </script>
 
 <template>
   <div
     ref="el"
     style="position: absolute; left: 50%; user-select: none; white-space: nowrap"
-    :style="{ transform: `translate3d(-50%, ${y}px, 0)` }"
+    :style="{ transform: `translate3d(${x}, ${y}px, 0)` }"
     contenteditable
     v-html="text"
   ></div>
