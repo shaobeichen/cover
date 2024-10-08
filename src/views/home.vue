@@ -98,15 +98,15 @@ const styleList = computed(() => [
       icon: {
         src: icon.value,
         left: {
-          desktop: 0,
-          mobile: 0
+          desktop: '50%',
+          mobile: '50%'
         },
         top: {
-          desktop: 0,
-          mobile: 0
+          desktop: '20px',
+          mobile: '60px'
         },
-        width: 180,
-        height: 180
+        width: '180px',
+        height: '180px'
       },
       texts: [
         {
@@ -116,7 +116,7 @@ const styleList = computed(() => [
             mobile: '50%'
           },
           top: {
-            desktop: -'20px',
+            desktop: '-20px',
             mobile: '60px'
           },
           fontSize: '170px',
@@ -174,13 +174,15 @@ const styleList = computed(() => [
     label: '左右风格'
   }
 ])
-const styleSelect = ref(styleList.value[0].value)
+let styleSelect = ref(styleList.value[0].value)
 
 const updateBackground = (value) => {
   background.value = value
+  styleSelect.value = styleList.value[0].value
 }
 const updateIcon = (value) => {
   icon.value = value
+  styleSelect.value = styleList.value[0].value
 }
 
 const downloadImage = (value, name) => {
