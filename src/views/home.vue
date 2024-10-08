@@ -41,14 +41,14 @@
   <div style="display: flex; width: fit-content; margin: 0 auto">
     <image-container
       id="imageWrapper"
-      :info="styleSelect"
+      :info="styleListMap[styleSelect]"
       platform="desktop"
       style="width: 960px; height: 540px"
     />
     &
     <image-container
       id="imageWrapper2"
-      :info="styleSelect"
+      :info="styleListMap[styleSelect]"
       platform="mobile"
       style="width: 456px; height: 608px"
     />
@@ -91,91 +91,167 @@ const color3 = ref('#f55456')
 const background = ref('')
 const icon = ref('')
 
-const styleList = computed(() => [
-  {
-    value: {
-      background: background.value || backgroundImage,
-      icon: {
-        src: icon.value,
+const styleListMap = computed(() => ({
+  1: {
+    background: background.value || backgroundImage,
+    icon: {
+      src: icon.value,
+      left: {
+        desktop: '50%',
+        mobile: '50%'
+      },
+      top: {
+        desktop: '20px',
+        mobile: '60px'
+      },
+      width: '180px',
+      height: '180px'
+    },
+    texts: [
+      {
+        text: '😭',
         left: {
           desktop: '50%',
           mobile: '50%'
         },
         top: {
-          desktop: '20px',
+          desktop: '-20px',
           mobile: '60px'
         },
-        width: '180px',
-        height: '180px'
+        fontSize: '170px',
+        fontFamily: fontSelect.value,
+        color: ''
       },
-      texts: [
-        {
-          text: '😭',
-          left: {
-            desktop: '50%',
-            mobile: '50%'
-          },
-          top: {
-            desktop: '-20px',
-            mobile: '60px'
-          },
-          fontSize: '170px',
-          fontFamily: fontSelect.value,
-          color: ''
+      {
+        text: '文字一',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
         },
-        {
-          text: '文字一',
-          left: {
-            desktop: '50%',
-            mobile: '50%'
-          },
-          top: {
-            desktop: '164px',
-            mobile: '220px'
-          },
-          fontSize: '100px',
-          fontFamily: fontSelect.value,
-          color: color1.value
+        top: {
+          desktop: '164px',
+          mobile: '220px'
         },
-        {
-          text: '文字二',
-          left: {
-            desktop: '50%',
-            mobile: '50%'
-          },
-          top: {
-            desktop: '262px',
-            mobile: '297px'
-          },
-          fontSize: '100px',
-          fontFamily: fontSelect.value,
-          color: color2.value
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color1.value
+      },
+      {
+        text: '文字二',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
         },
-        {
-          text: '文字三',
-          left: {
-            desktop: '50%',
-            mobile: '50%'
-          },
-          top: {
-            desktop: '357px',
-            mobile: '374px'
-          },
-          fontSize: '100px',
-          fontFamily: fontSelect.value,
-          color: color3.value
-        }
-      ]
+        top: {
+          desktop: '262px',
+          mobile: '297px'
+        },
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color2.value
+      },
+      {
+        text: '文字三',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
+        },
+        top: {
+          desktop: '357px',
+          mobile: '374px'
+        },
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color3.value
+      }
+    ]
+  },
+  2: {
+    background: background.value || backgroundImage,
+    icon: {
+      src: icon.value,
+      left: {
+        desktop: '50%',
+        mobile: '50%'
+      },
+      top: {
+        desktop: '20px',
+        mobile: '60px'
+      },
+      width: '180px',
+      height: '180px'
     },
+    texts: [
+      {
+        text: '😭',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
+        },
+        top: {
+          desktop: '-20px',
+          mobile: '60px'
+        },
+        fontSize: '170px',
+        fontFamily: fontSelect.value,
+        color: ''
+      },
+      {
+        text: '文字一',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
+        },
+        top: {
+          desktop: '164px',
+          mobile: '220px'
+        },
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color1.value
+      },
+      {
+        text: '文字二',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
+        },
+        top: {
+          desktop: '262px',
+          mobile: '297px'
+        },
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color2.value
+      },
+      {
+        text: '文字三',
+        left: {
+          desktop: '50%',
+          mobile: '50%'
+        },
+        top: {
+          desktop: '357px',
+          mobile: '374px'
+        },
+        fontSize: '100px',
+        fontFamily: fontSelect.value,
+        color: color3.value
+      }
+    ]
+  }
+}))
+const styleList = computed(() => [
+  {
+    value: 1,
     label: '上下风格'
   },
   {
-    value: {},
+    value: 2,
     label: '左右风格'
   }
 ])
 let styleSelect = ref(styleList.value[0].value)
-
 const updateBackground = (value) => {
   background.value = value
   styleSelect.value = styleList.value[0].value
