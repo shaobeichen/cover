@@ -41,23 +41,16 @@
   <div style="display: flex; width: fit-content; margin: 0 auto">
     <image-container
       id="imageWrapper"
-      :colors="[color1, color2, color3]"
-      :initxy-list="currentInitxyList[0]"
-      :background="background"
-      :icon="icon"
-      :style="{ fontFamily: fontSelect }"
+      :info="styleSelect"
+      platform="desktop"
       style="width: 960px; height: 540px"
     />
     &
     <image-container
       id="imageWrapper2"
-      :colors="[color1, color2, color3]"
-      :initxy-list="currentInitxyList[1]"
-      :background="background"
-      :icon="icon"
-      :fontSize="70"
+      :info="styleSelect"
+      platform="mobile"
       style="width: 456px; height: 608px"
-      :style="{ fontFamily: fontSelect }"
     />
   </div>
 </template>
@@ -65,15 +58,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import html2canvas from 'html2canvas'
+import backgroundImage from '@/assets/images/background.jpg'
 
-const color1 = ref('#fff')
-const color2 = ref('#f9a929')
-const color3 = ref('#f55456')
-
-const dataURL = ref('')
-const dataURL2 = ref('')
-const background = ref('')
-const icon = ref('')
 const fontList = ref([
   {
     label: '荆南波波黑',
@@ -97,28 +83,105 @@ const fontList = ref([
   }
 ])
 const fontSelect = ref(fontList.value[0].value)
-const styleList = ref([
+
+const color1 = ref('#fff')
+const color2 = ref('#f9a929')
+const color3 = ref('#f55456')
+
+const background = ref('')
+const icon = ref('')
+
+const styleList = computed(() => [
   {
-    value: 1,
+    value: {
+      background: background.value || backgroundImage,
+      icon: {
+        src: icon.value,
+        left: {
+          desktop: 0,
+          mobile: 0
+        },
+        top: {
+          desktop: 0,
+          mobile: 0
+        },
+        width: 180,
+        height: 180
+      },
+      texts: [
+        {
+          text: '😭',
+          left: {
+            desktop: '50%',
+            mobile: '50%'
+          },
+          top: {
+            desktop: -'20px',
+            mobile: '60px'
+          },
+          fontSize: '170px',
+          fontFamily: fontSelect.value,
+          color: ''
+        },
+        {
+          text: '文字一',
+          left: {
+            desktop: '50%',
+            mobile: '50%'
+          },
+          top: {
+            desktop: '164px',
+            mobile: '220px'
+          },
+          fontSize: '100px',
+          fontFamily: fontSelect.value,
+          color: color1.value
+        },
+        {
+          text: '文字二',
+          left: {
+            desktop: '50%',
+            mobile: '50%'
+          },
+          top: {
+            desktop: '262px',
+            mobile: '297px'
+          },
+          fontSize: '100px',
+          fontFamily: fontSelect.value,
+          color: color2.value
+        },
+        {
+          text: '文字三',
+          left: {
+            desktop: '50%',
+            mobile: '50%'
+          },
+          top: {
+            desktop: '357px',
+            mobile: '374px'
+          },
+          fontSize: '100px',
+          fontFamily: fontSelect.value,
+          color: color3.value
+        }
+      ]
+    },
     label: '上下风格'
   },
   {
-    value: 2,
+    value: {},
     label: '左右风格'
   }
 ])
 const styleSelect = ref(styleList.value[0].value)
-const initxyListMap = {
-  1: [
-    [-20, 164, 262, 357],
-    [60, 220, 297, 374]
-  ],
-  2: [
-    [0, 0, 0, 0],
-    [60, 164, 262, 357]
-  ]
+
+const updateBackground = (value) => {
+  background.value = value
 }
-const currentInitxyList = computed(() => initxyListMap[styleSelect.value || 1])
+const updateIcon = (value) => {
+  icon.value = value
+}
 
 const downloadImage = (value, name) => {
   const link = document.createElement('a')
@@ -136,8 +199,7 @@ const toImage = () => {
     allowTaint: true, //允许跨域图片
     taintTest: false //是否在渲染前测试图片
   }).then((canvas) => {
-    dataURL.value = canvas.toDataURL('image/png')
-    downloadImage(dataURL.value, '16')
+    downloadImage(canvas.toDataURL('image/png'), '16')
   })
   html2canvas(document.querySelector('#imageWrapper2'), {
     backgroundColor: null,
@@ -145,15 +207,7 @@ const toImage = () => {
     allowTaint: true, //允许跨域图片
     taintTest: false //是否在渲染前测试图片
   }).then((canvas) => {
-    dataURL2.value = canvas.toDataURL('image/png')
-    downloadImage(dataURL2.value, '9')
+    downloadImage(canvas.toDataURL('image/png'), '9')
   })
-}
-
-const updateBackground = (value) => {
-  background.value = value
-}
-const updateIcon = (value) => {
-  icon.value = value
 }
 </script>
