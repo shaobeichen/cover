@@ -116,9 +116,9 @@ const styleListMap = computed(() => ({
         },
         top: {
           desktop: '-20px',
-          mobile: '60px'
+          mobile: '30px'
         },
-        fontSize: '170px',
+        fontSize: '180px',
         fontFamily: fontSelect.value,
         color: ''
       },
@@ -129,10 +129,10 @@ const styleListMap = computed(() => ({
           mobile: '50%'
         },
         top: {
-          desktop: '164px',
+          desktop: '170px',
           mobile: '220px'
         },
-        fontSize: '100px',
+        fontSize: '110px',
         fontFamily: fontSelect.value,
         color: color1.value
       },
@@ -143,10 +143,10 @@ const styleListMap = computed(() => ({
           mobile: '50%'
         },
         top: {
-          desktop: '262px',
-          mobile: '297px'
+          desktop: '270px',
+          mobile: '320px'
         },
-        fontSize: '100px',
+        fontSize: '110px',
         fontFamily: fontSelect.value,
         color: color2.value
       },
@@ -157,89 +157,16 @@ const styleListMap = computed(() => ({
           mobile: '50%'
         },
         top: {
-          desktop: '357px',
-          mobile: '374px'
+          desktop: '370px',
+          mobile: '420px'
         },
-        fontSize: '100px',
+        fontSize: '110px',
         fontFamily: fontSelect.value,
         color: color3.value
       }
     ]
   },
-  2: {
-    background: background.value || backgroundImage,
-    icon: {
-      src: icon.value,
-      left: {
-        desktop: '50%',
-        mobile: '50%'
-      },
-      top: {
-        desktop: '20px',
-        mobile: '60px'
-      },
-      width: '180px',
-      height: '180px'
-    },
-    texts: [
-      {
-        text: '😭',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '-20px',
-          mobile: '60px'
-        },
-        fontSize: '170px',
-        fontFamily: fontSelect.value,
-        color: ''
-      },
-      {
-        text: '文字一',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '164px',
-          mobile: '220px'
-        },
-        fontSize: '100px',
-        fontFamily: fontSelect.value,
-        color: color1.value
-      },
-      {
-        text: '文字二',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '262px',
-          mobile: '297px'
-        },
-        fontSize: '100px',
-        fontFamily: fontSelect.value,
-        color: color2.value
-      },
-      {
-        text: '文字三',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '357px',
-          mobile: '374px'
-        },
-        fontSize: '100px',
-        fontFamily: fontSelect.value,
-        color: color3.value
-      }
-    ]
-  }
+  2: {}
 }))
 const styleList = computed(() => [
   {
