@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   info: {
@@ -26,22 +26,17 @@ const props = defineProps({
   }
 })
 
-const background = computed(() => props.info?.background)
-const icon = computed(() => props.info?.icon?.src)
+const background = computed(() => props.info?.background?.[props.platform]?.src)
+const icon = computed(() => props.info?.icon?.[props.platform]?.src)
 const iconStyle = computed(() => {
   return {
-    width: props.info?.icon?.width,
-    height: props.info?.icon?.height,
-    left: props.info?.icon?.left?.[props.platform],
-    top: props.info?.icon?.top?.[props.platform]
+    ...props.info?.icon[props.platform]
   }
 })
 const texts = computed(() =>
   props.info?.texts.map((item) => {
     return {
-      ...item,
-      left: item.left?.[props.platform],
-      top: item.top?.[props.platform]
+      ...item[props.platform]
     }
   })
 )

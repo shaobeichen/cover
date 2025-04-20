@@ -17,21 +17,6 @@
       <el-form-item label="主icon">
         <upload @change="updateIcon" />
       </el-form-item>
-      <el-form-item label="选择风格">
-        <el-select v-model="styleSelect">
-          <el-option
-            v-for="item in styleList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="文字颜色">
-        <el-color-picker v-model="color1" show-alpha />
-        <el-color-picker v-model="color2" show-alpha />
-        <el-color-picker v-model="color3" show-alpha />
-      </el-form-item>
       <el-form-item label="">
         <el-button type="primary" @click="toImage">生成图片</el-button>
       </el-form-item>
@@ -41,14 +26,14 @@
   <div style="display: flex; width: fit-content; margin: 0 auto">
     <image-container
       id="imageWrapper"
-      :info="styleListMap[styleSelect]"
+      :info="styleList"
       platform="desktop"
       style="width: 960px; height: 540px"
     />
     &
     <image-container
       id="imageWrapper2"
-      :info="styleListMap[styleSelect]"
+      :info="styleList"
       platform="mobile"
       style="width: 456px; height: 608px"
     />
@@ -59,6 +44,7 @@
 import { ref, computed } from 'vue'
 import html2canvas from 'html2canvas'
 import backgroundImage from '@/assets/images/background.jpg'
+import iconImage from '@/assets/images/icon.png'
 
 const fontList = ref([
   {
@@ -84,108 +70,118 @@ const fontList = ref([
 ])
 const fontSelect = ref(fontList.value[0].value)
 
-const color1 = ref('#fff')
-const color2 = ref('#f9a929')
-const color3 = ref('#f55456')
-
 const background = ref('')
 const icon = ref('')
 
-const styleListMap = computed(() => ({
-  1: {
-    background: background.value || backgroundImage,
-    icon: {
-      src: icon.value,
-      left: {
-        desktop: '50%',
-        mobile: '50%'
-      },
-      top: {
-        desktop: '20px',
-        mobile: '60px'
-      },
-      width: '180px',
-      height: '180px'
+const styleList = computed(() => ({
+  background: {
+    desktop: {
+      src: background.value || backgroundImage
     },
-    texts: [
-      {
-        text: '😭',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '-20px',
-          mobile: '30px'
-        },
-        fontSize: '180px',
+    mobile: {
+      src: background.value || backgroundImage
+    }
+  },
+  icon: {
+    desktop: {
+      src: icon.value || iconImage,
+      left: '25%',
+      top: '12%',
+      width: '230px',
+      height: '230px'
+    },
+    mobile: {
+      src: icon.value || iconImage,
+      left: '50%',
+      top: '12%',
+      width: '230px',
+      height: '230px'
+    }
+  },
+  texts: [
+    {
+      desktop: {
+        text: '程序员的',
+        left: '50%',
+        top: '16%',
+        fontSize: '140px',
         fontFamily: fontSelect.value,
-        color: ''
+        fontStyle: 'italic',
+        '--color1': '#ff973c',
+        backgroundImage: `linear-gradient(35deg, #ffffff, #ffffff, var(--color1), var(--color1), var(--color1))`,
+        '-webkit-text-fill-color': 'transparent',
+        '-webkit-background-clip': 'text',
+        textAlign: 'right',
+        width: '70%',
+        zIndex: 1,
+        letterSpacing: '-6px',
+        paddingRight: '20px',
+        boxSizing: 'content-box'
       },
-      {
-        text: '文字一',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '170px',
-          mobile: '220px'
-        },
+      mobile: {
+        text: '程序员的',
+        left: '48%',
+        top: '36%',
         fontSize: '110px',
         fontFamily: fontSelect.value,
-        color: color1.value
-      },
-      {
-        text: '文字二',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '270px',
-          mobile: '320px'
-        },
-        fontSize: '110px',
-        fontFamily: fontSelect.value,
-        color: color2.value
-      },
-      {
-        text: '文字三',
-        left: {
-          desktop: '50%',
-          mobile: '50%'
-        },
-        top: {
-          desktop: '370px',
-          mobile: '420px'
-        },
-        fontSize: '110px',
-        fontFamily: fontSelect.value,
-        color: color3.value
+        fontStyle: 'italic',
+        '--color1': '#ff973c',
+        backgroundImage: `linear-gradient(35deg, #ffffff, #ffffff, var(--color1), var(--color1), var(--color1))`,
+        '-webkit-text-fill-color': 'transparent',
+        '-webkit-background-clip': 'text',
+        textAlign: 'center',
+        width: '100%',
+        zIndex: 1,
+        letterSpacing: '-6px',
+        paddingRight: '0',
+        boxSizing: 'content-box'
       }
-    ]
-  },
-  2: {}
+    },
+    {
+      desktop: {
+        text: '学英语神器',
+        left: '50%',
+        top: '43%',
+        fontSize: '140px',
+        fontFamily: fontSelect.value,
+        fontStyle: 'italic',
+        '--color1': 'rgb(255 106 161)',
+        backgroundImage: `linear-gradient(35deg, #ffffff, #ffffff, var(--color1), var(--color1), var(--color1))`,
+        '-webkit-text-fill-color': 'transparent',
+        '-webkit-background-clip': 'text',
+        textAlign: 'right',
+        width: '70%',
+        zIndex: 1,
+        letterSpacing: '-6px',
+        paddingRight: '20px',
+        boxSizing: 'content-box'
+      },
+      mobile: {
+        text: '学英语神',
+        left: '48%',
+        top: '54%',
+        fontSize: '110px',
+        fontFamily: fontSelect.value,
+        fontStyle: 'italic',
+        '--color1': 'rgb(255 106 161)',
+        backgroundImage: `linear-gradient(35deg, #ffffff, #ffffff, var(--color1), var(--color1), var(--color1))`,
+        '-webkit-text-fill-color': 'transparent',
+        '-webkit-background-clip': 'text',
+        textAlign: 'center',
+        width: '100%',
+        zIndex: 1,
+        letterSpacing: '-6px',
+        paddingRight: '0',
+        boxSizing: 'content-box'
+      }
+    }
+  ]
 }))
-const styleList = computed(() => [
-  {
-    value: 1,
-    label: '上下风格'
-  },
-  {
-    value: 2,
-    label: '左右风格'
-  }
-])
-let styleSelect = ref(styleList.value[0].value)
 const updateBackground = (value) => {
   background.value = value
-  styleSelect.value = styleList.value[0].value
 }
 const updateIcon = (value) => {
   icon.value = value
-  styleSelect.value = styleList.value[0].value
 }
 
 const downloadImage = (value, name) => {
