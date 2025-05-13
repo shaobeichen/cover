@@ -30,7 +30,7 @@
       platform="desktop"
       style="width: 960px; height: 540px"
     />
-    &
+
     <image-container
       id="imageWrapper2"
       :info="styleList"
