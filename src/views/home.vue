@@ -28,7 +28,7 @@
       id="imageWrapper"
       :info="styleList"
       platform="desktop"
-      style="width: 960px; height: 540px"
+      style="width: 960px; height: 540px;margin-right: 20px;"
     />
 
     <image-container
@@ -41,10 +41,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import html2canvas from 'html2canvas'
+import { ref, computed } from 'vue' 
 import backgroundImage from '@/assets/images/background.jpg'
 import iconImage from '@/assets/images/icon.png'
+import { domToPng } from 'modern-screenshot'
+
 
 const fontList = ref([
   {
@@ -194,21 +195,11 @@ const downloadImage = (value, name) => {
 }
 
 const toImage = () => {
-  html2canvas(document.querySelector('#imageWrapper'), {
-    backgroundColor: null,
-    useCORS: true, // 【重要】开启跨域配置
-    allowTaint: true, //允许跨域图片
-    taintTest: false //是否在渲染前测试图片
-  }).then((canvas) => {
-    downloadImage(canvas.toDataURL('image/png'), '16')
-  })
-  html2canvas(document.querySelector('#imageWrapper2'), {
-    backgroundColor: null,
-    useCORS: true, // 【重要】开启跨域配置
-    allowTaint: true, //允许跨域图片
-    taintTest: false //是否在渲染前测试图片
-  }).then((canvas) => {
-    downloadImage(canvas.toDataURL('image/png'), '9')
-  })
+    domToPng(document.querySelector('#imageWrapper'), { scale:2 }).then(dataUrl => {
+        downloadImage(dataUrl, '16')
+    })
+    domToPng(document.querySelector('#imageWrapper2'), { scale:2 }).then(dataUrl => {
+        downloadImage(dataUrl, '9')
+    })
 }
 </script>
