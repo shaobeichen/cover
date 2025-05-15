@@ -14,8 +14,14 @@
       <el-form-item label="背景">
         <upload @change="updateBackground" />
       </el-form-item>
-      <el-form-item label="主icon">
+      <el-form-item label="icon">
         <upload @change="updateIcon" />
+      </el-form-item>
+      <el-form-item label="表情开关">
+        <el-switch v-model="emojiSwitch" />
+      </el-form-item>
+      <el-form-item label="表情">
+        <el-input v-model="emoji" />
       </el-form-item>
       <el-form-item label="">
         <el-button type="primary" @click="toImage">生成图片</el-button>
@@ -28,24 +34,27 @@
       id="imageWrapper"
       :info="styleList"
       platform="desktop"
-      style="width: 960px; height: 540px;margin-right: 20px;"
+      :emoji="emoji"
+      :emoji-switch="emojiSwitch"
+      style="width: 960px; height: 540px; margin-right: 20px"
     />
 
     <image-container
       id="imageWrapper2"
       :info="styleList"
       platform="mobile"
+      :emoji="emoji"
+      :emoji-switch="emojiSwitch"
       style="width: 456px; height: 608px"
     />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue' 
+import { ref, computed } from 'vue'
 import backgroundImage from '@/assets/images/background.jpg'
 import iconImage from '@/assets/images/icon.png'
 import { domToPng } from 'modern-screenshot'
-
 
 const fontList = ref([
   {
@@ -73,6 +82,8 @@ const fontSelect = ref(fontList.value[0].value)
 
 const background = ref('')
 const icon = ref('')
+const emojiSwitch = ref(false)
+const emoji = ref('😱')
 
 const styleList = computed(() => ({
   background: {
@@ -87,16 +98,19 @@ const styleList = computed(() => ({
     desktop: {
       src: icon.value || iconImage,
       left: '25%',
-      top: '12%',
+      top: emojiSwitch.value ? '7%' : '12%',
       width: '230px',
-      height: '230px'
+      height: '230px',
+      fontSize: '190px'
     },
     mobile: {
       src: icon.value || iconImage,
       left: '50%',
-      top: '12%',
+      top: emojiSwitch.value ? '5%' : '12%',
       width: '230px',
-      height: '230px'
+      height: '230px',
+      fontSize: '200px',
+      textAlign: 'center'
     }
   },
   texts: [
@@ -195,11 +209,11 @@ const downloadImage = (value, name) => {
 }
 
 const toImage = () => {
-    domToPng(document.querySelector('#imageWrapper'), { scale:2 }).then(dataUrl => {
-        downloadImage(dataUrl, '16')
-    })
-    domToPng(document.querySelector('#imageWrapper2'), { scale:2 }).then(dataUrl => {
-        downloadImage(dataUrl, '9')
-    })
+  domToPng(document.querySelector('#imageWrapper'), { scale: 2 }).then((dataUrl) => {
+    downloadImage(dataUrl, '16')
+  })
+  domToPng(document.querySelector('#imageWrapper2'), { scale: 2 }).then((dataUrl) => {
+    downloadImage(dataUrl, '9')
+  })
 }
 </script>

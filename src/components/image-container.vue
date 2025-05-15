@@ -7,7 +7,13 @@
       :style="item"
       style="transform: translate3d(-50%, 0, 0)"
     />
-    <drag-image :src="icon" :style="iconStyle" style="transform: translate3d(-50%, 0, 0)" />
+    <drag-text
+      v-if="emojiSwitch"
+      :text="emoji"
+      :style="iconStyle"
+      style="transform: translate3d(-50%, 0, 0)"
+    />
+    <drag-image v-else :src="icon" :style="iconStyle" style="transform: translate3d(-50%, 0, 0)" />
     <img :src="background" style="width: 100%; height: 100%; object-fit: cover" />
   </div>
 </template>
@@ -23,6 +29,14 @@ const props = defineProps({
   platform: {
     type: String,
     default: 'desktop'
+  },
+  emoji: {
+    type: String,
+    default: ''
+  },
+  emojiSwitch: {
+    type: Boolean,
+    default: false
   }
 })
 
